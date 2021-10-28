@@ -83,6 +83,10 @@ public class Anagram {
         String input2 = scanner.nextLine();
 
         Anagram anagram = new Anagram(input1, input2);
-        System.out.println(anagram.isAnagram());
+        if (anagram.isAnagram()) {
+            System.out.println("It's an anagram");
+        } else {
+            System.out.println("It's not an anagram");
+        }
     }
 }
