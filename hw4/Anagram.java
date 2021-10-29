@@ -8,7 +8,7 @@ public class Anagram {
     private static ArrayList<String> wordList1 = new ArrayList<>();
     private static ArrayList<String> wordList2 = new ArrayList<>();
 
-    Anagram(String input1, String input2) {
+    public Anagram(String input1, String input2) {
         Pattern pattern = Pattern.compile("([А-Яа-яЁёA-Za-z]+)");
         Matcher matcher1 = pattern.matcher(input1);
         Matcher matcher2 = pattern.matcher(input2);
