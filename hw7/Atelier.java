@@ -1,5 +1,5 @@
 public class Atelier {
-    public static String dressMan(Clothes[] clothes) {
+    public static String dressMen(Clothes[] clothes) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Clothes clothes1: clothes){
             if (clothes1 instanceof MenClothes){
@@ -26,7 +26,7 @@ public class Atelier {
                 new Pants(Size.S, 600, "grey"),
                 new Tshirt(Size.XXS, 450, "green")};
 
-        System.out.println(dressMan(clothes));
+        System.out.println(dressMen(clothes));
         System.out.println(dressWomen(clothes));
     }
 }
