@@ -22,7 +22,10 @@ public class PhoneBook {
 
     public void deleteSubscriberByField(String field, String name) {
         Pattern pattern = Pattern.compile(field + "=" + name);
-        for (int i = 0; i < phoneBook.size(); i++) {
+        for (int i = 0; i < phoneBook.size(); i++) { 
+            //java.lang.ClassCastException
+            //phoneBook.get(i).getName();
+            
             Object object = phoneBook.get(i);
             Matcher matcher = pattern.matcher(object.toString());
             if(matcher.find()){
