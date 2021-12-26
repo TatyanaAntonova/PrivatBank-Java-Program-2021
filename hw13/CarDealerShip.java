@@ -1,8 +1,9 @@
 import java.util.ArrayList;
-import java.util.List;
 
 public class CarDealerShip extends Thread {
     static class CarList<String> extends ArrayList {
+        boolean isOpen = true;
+
         @Override
         public void add(int index, Object o) {
             if (super.size() == 5) {
@@ -10,21 +11,40 @@ public class CarDealerShip extends Thread {
             }
             super.add(o);
         }
+
+        public boolean isFull() {
+            if (super.size() == 5) return true;
+            return false;
+        }
+
+        public void setOpen(){
+            isOpen = !isOpen;
+        }
+
+        public boolean isOpen(){
+            return isOpen;
+        }
     }
 
     private static final Object lock = new Object();
-    private static List<String> carList = new CarList<>();
+    private static CarList carList = new CarList<>();
 
     static class Producer extends Thread {
+        int carId = 0;
+
         @Override
         public void run() {
-            for (int i = 0; i < 10; ) {
+            while (carId < 15) {
                 synchronized (lock) {
                     try {
-                        for (int j = 0; j < 5; j++, i++) {
+                        int index = 0;
+
+                        while (!carList.isFull()) {
                             System.out.println("Producer " + getName() + " is working now.");
-                            carList.add(j, "a new car number " + i);
-                            System.out.println("Producer produced " + carList.get(j));
+                            carList.add(index, "a new car number " + carId);
+                            System.out.println("Producer produced " + carList.get(index));
+                            carId++;
+                            index++;
                         }
 
                         lock.notify();
@@ -34,13 +54,15 @@ public class CarDealerShip extends Thread {
                     }
                 }
             }
+
+            carList.setOpen();
         }
     }
 
     static class Buyer extends Thread {
         @Override
         public void run() {
-            for (int i = 0; i < 5; i++) {
+            while (carList.isOpen()) {
                 synchronized (lock) {
                     try {
                         while (!carList.isEmpty()) {
