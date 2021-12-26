@@ -5,7 +5,7 @@ public class CarDealerShip extends ArrayList {
 
     @Override
     public void add(int index, Object o) {
-        if (super.size() => 5) {
+        if (super.size() >= 5) {
             return;
         }
         super.add(o);
