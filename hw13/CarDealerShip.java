@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class CarDealerShip extends Thread {
-    static class CarList<String> extends ArrayList {
+    private static class CarList<String> extends ArrayList {
         boolean isOpen = true;
 
         @Override
@@ -17,11 +17,11 @@ public class CarDealerShip extends Thread {
             return false;
         }
 
-        public void setOpen(){
+        public void setOpen() {
             isOpen = !isOpen;
         }
 
-        public boolean isOpen(){
+        public boolean isOpen() {
             return isOpen;
         }
     }
@@ -29,12 +29,12 @@ public class CarDealerShip extends Thread {
     private static final Object lock = new Object();
     private static CarList carList = new CarList<>();
 
-    static class Producer extends Thread {
+    private static class Producer extends Thread {
         int carId = 0;
 
         @Override
         public void run() {
-            while (carId < 15) {
+            while (carId < 10) {
                 synchronized (lock) {
                     try {
                         int index = 0;
@@ -59,7 +59,7 @@ public class CarDealerShip extends Thread {
         }
     }
 
-    static class Buyer extends Thread {
+    private static class Buyer extends Thread {
         @Override
         public void run() {
             while (carList.isOpen()) {
@@ -77,11 +77,14 @@ public class CarDealerShip extends Thread {
                     }
                 }
             }
+            System.out.println("Car dealership closed.");
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
+        System.out.println("Car dealership has opened and start working.");
         new Producer().start();
         new Buyer().start();
+
     }
 }
