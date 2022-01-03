@@ -6,9 +6,10 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.GregorianCalendar;
 
-public class Subscriber {
+public class Subscriber implements Comparable<Subscriber> {
     private Calendar calendar = new GregorianCalendar();
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -22,10 +23,13 @@ public class Subscriber {
     private ArrayList<String> phoneList;
     private String updateDate;
 
-    Subscriber(String name, String address, LocalDate dateOfBirth, ArrayList<String> phoneList) {
+    Subscriber() {
+    }
+
+    Subscriber(String name, LocalDate dateOfBirth, String address, ArrayList<String> phoneList) {
         this.name = name;
-        this.address = address;
         this.dateOfBirth = dateOfBirth;
+        this.address = address;
         updateDate = dateFormat.format(calendar.getTime());
         this.phoneList = phoneList;
     }
@@ -71,13 +75,26 @@ public class Subscriber {
     }
 
     @Override
+    public int compareTo(Subscriber o) {
+        if (o == null) throw new NullPointerException();
+
+        if (o.name.equals(this.name) && o.address.equals(this.address) && o.dateOfBirth.compareTo(this.dateOfBirth) == 0) {
+            return 0;
+        }
+
+        return -1;
+    }
+
+    @Override
     public String toString() {
         return "Subscriber{" +
-                "name=" + name  +
-                ", address=" + address  +
+                "name=" + name +
+                ", address=" + address +
                 ", dateOfBirth=" + dateOfBirth +
                 ", phoneList=" + phoneList +
                 ", updateDate=" + updateDate +
                 '}';
     }
+
+
 }
